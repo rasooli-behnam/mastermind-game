@@ -1,0 +1,2 @@
+export const SAMPLE_CONSTANT = "SAMPLE_CONSTANT";
+export type SAMPLE_CONSTANT = typeof SAMPLE_CONSTANT;
