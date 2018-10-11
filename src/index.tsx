@@ -5,7 +5,7 @@ import reducers from "./reducers";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import "typeface-roboto";
+import "typeface-roboto-mono";
 
 const store = createStore(reducers);
 
