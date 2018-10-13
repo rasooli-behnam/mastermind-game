@@ -1,6 +1,6 @@
 import * as React from "react";
-import { WithStyles, createStyles, withStyles, Grid } from "@material-ui/core";
-import ResultRow from "./ResultBox";
+import ResultBox from "./ResultBox";
+import { createStyles, Grid, WithStyles, withStyles } from "@material-ui/core";
 
 const numberOfResults: number = 3;
 
@@ -11,9 +11,16 @@ class ResultArea extends React.Component<ResultAreaProps, any> {
     const { classes } = this.props;
 
     return (
-      <Grid className={classes.root} container direction="column-reverse">
+      <Grid
+        className={classes.root}
+        container
+        spacing={8}
+        justify="flex-start"
+        alignItems="center"
+        direction="column-reverse"
+      >
         {Array.from(Array(numberOfResults).keys()).map(value => (
-          <ResultRow key={value} />
+          <ResultBox key={value} />
         ))}
       </Grid>
     );
@@ -22,8 +29,8 @@ class ResultArea extends React.Component<ResultAreaProps, any> {
 
 const styles = createStyles({
   root: {
-    height: "100%",
     width: "100%",
+    height: "100%",
     margin: 0
   }
 });

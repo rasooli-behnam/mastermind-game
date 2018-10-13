@@ -3,6 +3,7 @@ import { AppState } from "../types";
 import { connect } from "react-redux";
 import {
   createStyles,
+  Grid,
   Paper,
   Theme,
   Typography,
@@ -18,17 +19,21 @@ class ResultBox extends React.Component<ResultBoxProps, any> {
     const { classes } = this.props;
 
     return (
-      <Paper className={classes.root}>
-        <Typography className={classes.topPartialFeedback}>{`0:0`}</Typography>
-        <Typography className={classes.topLine}>{` _____`}</Typography>
-        <Typography className={classes.guess}>{`123424313`}</Typography>
-        <Typography className={classes.bottomLine}>{`   _____`}</Typography>
-        <Typography
-          className={classes.bottomPartialFeedback}
-        >{`0:0`}</Typography>
-        <Typography className={classes.feedbackLine}>|</Typography>
-        <Typography className={classes.feedback}>{`0:0`}</Typography>
-      </Paper>
+      <Grid item className={classes.root}>
+        <Paper className={classes.paper}>
+          <Typography
+            className={classes.topPartialFeedback}
+          >{`0:0`}</Typography>
+          <Typography className={classes.topLine}>{` _____`}</Typography>
+          <Typography className={classes.guess}>{`ABCDEABCD`}</Typography>
+          <Typography className={classes.bottomLine}>{`   _____`}</Typography>
+          <Typography
+            className={classes.bottomPartialFeedback}
+          >{`0:0`}</Typography>
+          <Typography className={classes.feedbackLine}>|</Typography>
+          <Typography className={classes.feedback}>{`0:0`}</Typography>
+        </Paper>
+      </Grid>
     );
   }
 }
@@ -36,10 +41,13 @@ class ResultBox extends React.Component<ResultBoxProps, any> {
 const styles = ({ typography }: Theme) =>
   createStyles({
     root: {
+      width: GlobalSettings.view.width * 0.5 - 3,
+      height: 68
+    },
+    paper: {
       position: "relative",
-      width: GlobalSettings.view.width * 0.5 - 10,
-      height: 60,
-      margin: 5,
+      width: "100%",
+      height: "100%",
       backgroundColor: "lightYellow"
     },
     topPartialFeedback: {
@@ -60,7 +68,8 @@ const styles = ({ typography }: Theme) =>
       fontFamily: "Roboto Mono",
       fontWeight: "normal",
       letterSpacing: 2,
-      whiteSpace: "pre"
+      whiteSpace: "pre",
+      color: "gray"
     },
     guess: {
       position: "absolute",
@@ -80,7 +89,8 @@ const styles = ({ typography }: Theme) =>
       fontFamily: "Roboto Mono",
       fontWeight: "normal",
       letterSpacing: 2,
-      whiteSpace: "pre"
+      whiteSpace: "pre",
+      color: "gray"
     },
     bottomPartialFeedback: {
       position: "absolute",
@@ -95,7 +105,7 @@ const styles = ({ typography }: Theme) =>
     feedbackLine: {
       position: "absolute",
       top: 25,
-      right: 31,
+      right: 30,
       fontSize: typography.fontSize * 4,
       fontFamily: "Roboto Mono",
       fontWeight: "lighter",
