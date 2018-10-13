@@ -7,8 +7,12 @@ import {
   withStyles
 } from "@material-ui/core";
 import { GlobalSettings } from "../GlobalSettings";
+import { connect } from "react-redux";
+import { AppState } from "../reducers";
 
-export interface ChoiceProps extends WithStyles<typeof styles> {}
+export interface ChoiceProps extends WithStyles<typeof styles> {
+  combination: AppState["combination"];
+}
 
 class Choice extends React.Component<ChoiceProps, any> {
   constructor(props: ChoiceProps) {
@@ -32,7 +36,7 @@ class Choice extends React.Component<ChoiceProps, any> {
   };
 
   public render() {
-    const { classes } = this.props;
+    const { classes, combination } = this.props;
     const { guess } = this.state;
 
     return (
@@ -40,7 +44,7 @@ class Choice extends React.Component<ChoiceProps, any> {
         <TextField
           className={classes.root}
           placeholder="enter your guess here..."
-          type="number"
+          type="text"
           value={guess}
           onChange={this.handleTextfieldChange}
           margin="dense"
@@ -63,4 +67,10 @@ const styles = createStyles({
   }
 });
 
-export default withStyles(styles)(Choice);
+const ChoiceWithStyle = withStyles(styles)(Choice);
+
+const mapAppStateToProps = (appState: AppState) => ({
+  combination: appState.combination
+});
+
+export default connect(mapAppStateToProps)(ChoiceWithStyle);

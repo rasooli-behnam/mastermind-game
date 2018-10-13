@@ -1,6 +1,13 @@
 import * as constants from "../constants";
 import { combineReducers } from "redux";
+import combinationReducer from "./combinationReducer";
 
-const reducers = combineReducers({});
+export interface AppState {
+  combination: string[];
+}
+
+const reducers = combineReducers<AppState>({
+  combination: combinationReducer
+});
 
 export default reducers;
