@@ -8,3 +8,22 @@ export function resetCombination(): ResetCombinationAction {
     type: constants.RESET_COMBINATION
   };
 }
+
+export interface GetFeedbackAction extends Action<string> {
+  payload: {
+    guesses: string[];
+    combination: string[];
+  };
+}
+
+export function getFeedback(
+  prams: GetFeedbackAction["payload"]
+): GetFeedbackAction {
+  return {
+    type: constants.GET_FEEDBACK,
+    payload: {
+      guesses: prams.guesses,
+      combination: prams.combination
+    }
+  };
+}
