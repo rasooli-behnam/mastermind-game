@@ -26,9 +26,9 @@ class ResultArea extends React.Component<ResultAreaProps, any> {
         alignItems="center"
         direction="column-reverse"
       >
-        {feedbacks.map((f, i) => (
-          <ResultBox key={i} feedback={f} />
-        ))}
+        {feedbacks
+          .map((f, i) => <ResultBox key={i} feedback={f} />)
+          .slice(0, 16)}
       </Grid>
     );
   }
