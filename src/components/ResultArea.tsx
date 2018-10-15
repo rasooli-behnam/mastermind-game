@@ -7,12 +7,15 @@ import { createStyles, Grid, WithStyles, withStyles } from "@material-ui/core";
 const numberOfResults: number = 3;
 
 export interface ResultAreaProps extends WithStyles<typeof styles> {
+  combination: AppState["combination"];
   feedbacks: AppState["feedbacks"];
 }
 
 class ResultArea extends React.Component<ResultAreaProps, any> {
   public render() {
-    const { classes, feedbacks } = this.props;
+    const { classes, feedbacks, combination } = this.props;
+
+    console.log(combination);
 
     return (
       <Grid
@@ -42,6 +45,7 @@ const styles = createStyles({
 const ResultAreaWithStyles = withStyles(styles)(ResultArea);
 
 const mapAppStateToProps = (appState: AppState) => ({
+  combination: appState.combination,
   feedbacks: appState.feedbacks
 });
 

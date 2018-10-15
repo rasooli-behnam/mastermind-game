@@ -85,7 +85,7 @@ function getFeedbackFor(
   }
 
   for (let i = 0; i < clonedGuesses.length; i++) {
-    if (clonedGuesses[i] != "used") {
+    if (clonedGuesses[i] !== "used") {
       for (let ii = 0; ii <= clonedCombination.length; ii++) {
         if (clonedGuesses[i] === clonedCombination[ii]) {
           clonedCombination[ii] = "used";

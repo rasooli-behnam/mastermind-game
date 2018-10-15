@@ -1,21 +1,19 @@
 import * as React from "react";
+import { AppState } from "../reducers";
+import { connect } from "react-redux";
 import {
   createStyles,
   TextField,
-  Theme,
   WithStyles,
   withStyles
 } from "@material-ui/core";
-import { GlobalSettings } from "../GlobalSettings";
-import { connect } from "react-redux";
-import { AppState } from "../reducers";
 import { Dispatch } from "redux";
-import { resetCombination, getFeedback, GetFeedbackAction } from "src/actions";
+import { getFeedback, GetFeedbackAction, resetCombination } from "src/actions";
+import { GlobalSettings } from "../GlobalSettings";
 
 export interface ChoiceProps extends WithStyles<typeof styles> {
   combination: AppState["combination"];
-  feedbacks: AppState["feedbacks"];
-  resetCombination: () => void;
+  resetCombination: typeof resetCombination;
   getFeedback: typeof getFeedback;
 }
 
@@ -36,8 +34,6 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
     event: React.FormEvent<HTMLFormElement>
   ): void => {
     event.preventDefault();
-    console.log(this.props.combination);
-    console.log(this.props.feedbacks);
 
     this.props.getFeedback({
       guesses: this.state.guesses.split(""),
@@ -52,7 +48,7 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
   };
 
   public render() {
-    const { classes, combination, feedbacks } = this.props;
+    const { classes } = this.props;
     const { guesses } = this.state;
 
     return (
@@ -86,8 +82,7 @@ const styles = createStyles({
 const ChoiceWithStyle = withStyles(styles)(Choice);
 
 const mapAppStateToProps = (appState: AppState) => ({
-  combination: appState.combination,
-  feedbacks: appState.feedbacks
+  combination: appState.combination
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
