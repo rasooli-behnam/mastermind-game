@@ -10,28 +10,45 @@ import {
   WithStyles,
   withStyles
 } from "@material-ui/core";
+import { Feedback } from "../reducers/feedbackReducer";
 import { GlobalSettings } from "../GlobalSettings";
 
-export interface ResultBoxProps extends WithStyles<typeof styles> {}
+export interface ResultBoxProps extends WithStyles<typeof styles> {
+  feedback: Feedback;
+}
 
 class ResultBox extends React.Component<ResultBoxProps, any> {
   public render() {
-    const { classes } = this.props;
+    const { classes, feedback } = this.props;
+
+    const firstSubSetFeedback = `${feedback.firstSubSet.rightGuesses}:${
+      feedback.firstSubSet.rightGuessesWithWrongSpot
+    }`;
+
+    const secondSubSetFeedback = `${feedback.secondSubset.rightGuesses}:${
+      feedback.secondSubset.rightGuessesWithWrongSpot
+    }`;
+
+    const overallSubSetFeedback = `${feedback.overallSet.rightGuesses}:${
+      feedback.overallSet.rightGuessesWithWrongSpot
+    }`;
 
     return (
       <Grid item className={classes.root}>
         <Paper className={classes.paper}>
-          <Typography
-            className={classes.topPartialFeedback}
-          >{`0:0`}</Typography>
+          <Typography className={classes.firstSubSetFeedback}>
+            {firstSubSetFeedback}
+          </Typography>
           <Typography className={classes.topLine}>{` _____`}</Typography>
-          <Typography className={classes.guess}>{`ABCDEABCD`}</Typography>
+          <Typography className={classes.guess}>{feedback.guesses}</Typography>
           <Typography className={classes.bottomLine}>{`   _____`}</Typography>
-          <Typography
-            className={classes.bottomPartialFeedback}
-          >{`0:0`}</Typography>
-          <Typography className={classes.feedbackLine}>|</Typography>
-          <Typography className={classes.feedback}>{`0:0`}</Typography>
+          <Typography className={classes.secondSubSetFeedback}>
+            {secondSubSetFeedback}
+          </Typography>
+          <Typography className={classes.overallFeedbackLine}>|</Typography>
+          <Typography className={classes.overallFeedback}>
+            {overallSubSetFeedback}
+          </Typography>
         </Paper>
       </Grid>
     );
@@ -50,7 +67,7 @@ const styles = ({ typography }: Theme) =>
       height: "100%",
       backgroundColor: "lightYellow"
     },
-    topPartialFeedback: {
+    firstSubSetFeedback: {
       position: "absolute",
       top: 8,
       left: 38,
@@ -92,7 +109,7 @@ const styles = ({ typography }: Theme) =>
       whiteSpace: "pre",
       color: "gray"
     },
-    bottomPartialFeedback: {
+    secondSubSetFeedback: {
       position: "absolute",
       bottom: 9,
       left: 70,
@@ -102,7 +119,7 @@ const styles = ({ typography }: Theme) =>
       letterSpacing: 3,
       lineHeight: 0
     },
-    feedbackLine: {
+    overallFeedbackLine: {
       position: "absolute",
       top: 25,
       right: 30,
@@ -111,7 +128,7 @@ const styles = ({ typography }: Theme) =>
       fontWeight: "lighter",
       lineHeight: 0
     },
-    feedback: {
+    overallFeedback: {
       position: "absolute",
       top: 30,
       right: 7,

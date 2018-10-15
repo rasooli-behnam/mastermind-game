@@ -1,14 +1,18 @@
 import * as React from "react";
 import ResultBox from "./ResultBox";
+import { AppState } from "../reducers";
+import { connect } from "react-redux";
 import { createStyles, Grid, WithStyles, withStyles } from "@material-ui/core";
 
 const numberOfResults: number = 3;
 
-export interface ResultAreaProps extends WithStyles<typeof styles> {}
+export interface ResultAreaProps extends WithStyles<typeof styles> {
+  feedbacks: AppState["feedbacks"];
+}
 
 class ResultArea extends React.Component<ResultAreaProps, any> {
   public render() {
-    const { classes } = this.props;
+    const { classes, feedbacks } = this.props;
 
     return (
       <Grid
@@ -19,8 +23,8 @@ class ResultArea extends React.Component<ResultAreaProps, any> {
         alignItems="center"
         direction="column-reverse"
       >
-        {Array.from(Array(numberOfResults).keys()).map(value => (
-          <ResultBox key={value} />
+        {feedbacks.map((f, i) => (
+          <ResultBox key={i} feedback={f} />
         ))}
       </Grid>
     );
@@ -35,4 +39,10 @@ const styles = createStyles({
   }
 });
 
-export default withStyles(styles)(ResultArea);
+const ResultAreaWithStyles = withStyles(styles)(ResultArea);
+
+const mapAppStateToProps = (appState: AppState) => ({
+  feedbacks: appState.feedbacks
+});
+
+export default connect(mapAppStateToProps)(ResultAreaWithStyles);
