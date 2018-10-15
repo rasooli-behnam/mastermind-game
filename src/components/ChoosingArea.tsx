@@ -9,43 +9,59 @@ import {
 import { GlobalSettings } from "../GlobalSettings";
 import { connect } from "react-redux";
 import { AppState } from "../reducers";
+import { Dispatch } from "redux";
+import { resetCombination, getFeedback, GetFeedbackAction } from "src/actions";
 
 export interface ChoiceProps extends WithStyles<typeof styles> {
   combination: AppState["combination"];
+  feedbacks: AppState["feedbacks"];
+  resetCombination: () => void;
+  getFeedback: typeof getFeedback;
 }
 
-class Choice extends React.Component<ChoiceProps, any> {
+export interface ChoiceState {
+  guesses: string;
+}
+
+class Choice extends React.Component<ChoiceProps, ChoiceState> {
   constructor(props: ChoiceProps) {
     super(props);
     this.state = {
-      guess: ""
+      guesses: ""
     };
+    props.resetCombination();
   }
 
   private handleFormSubmit = (
     event: React.FormEvent<HTMLFormElement>
   ): void => {
     event.preventDefault();
-    console.log(this.state.guess);
+    console.log(this.props.combination);
+    console.log(this.props.feedbacks);
+
+    this.props.getFeedback({
+      guesses: this.state.guesses.split(""),
+      combination: this.props.combination
+    });
   };
 
   private handleTextfieldChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    this.setState({ guess: event.target.value });
+    this.setState({ guesses: event.target.value });
   };
 
   public render() {
-    const { classes, combination } = this.props;
-    const { guess } = this.state;
+    const { classes, combination, feedbacks } = this.props;
+    const { guesses } = this.state;
 
     return (
       <form onSubmit={this.handleFormSubmit}>
         <TextField
           className={classes.root}
-          placeholder="enter your guess here..."
+          placeholder="enter your guesses here..."
           type="text"
-          value={guess}
+          value={guesses}
           onChange={this.handleTextfieldChange}
           margin="dense"
           variant="outlined"
@@ -70,7 +86,17 @@ const styles = createStyles({
 const ChoiceWithStyle = withStyles(styles)(Choice);
 
 const mapAppStateToProps = (appState: AppState) => ({
-  combination: appState.combination
+  combination: appState.combination,
+  feedbacks: appState.feedbacks
 });
 
-export default connect(mapAppStateToProps)(ChoiceWithStyle);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  resetCombination: () => dispatch(resetCombination()),
+  getFeedback: (prams: GetFeedbackAction["payload"]) =>
+    dispatch(getFeedback(prams))
+});
+
+export default connect(
+  mapAppStateToProps,
+  mapDispatchToProps
+)(ChoiceWithStyle);
