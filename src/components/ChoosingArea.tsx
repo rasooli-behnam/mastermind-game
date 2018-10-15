@@ -13,6 +13,7 @@ import { GlobalSettings } from "../GlobalSettings";
 
 export interface ChoiceProps extends WithStyles<typeof styles> {
   combination: AppState["combination"];
+  endOfPlay: AppState["endOfPlay"];
   resetCombination: typeof resetCombination;
   getFeedback: typeof getFeedback;
 }
@@ -48,16 +49,21 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
   };
 
   public render() {
-    const { classes } = this.props;
+    const { classes, combination, endOfPlay } = this.props;
     const { guesses } = this.state;
 
     return (
       <form onSubmit={this.handleFormSubmit}>
         <TextField
+          disabled={endOfPlay.condition}
           className={classes.root}
           placeholder="enter your guesses here..."
           type="text"
-          value={guesses}
+          value={
+            endOfPlay.condition
+              ? `${endOfPlay.message} (${combination})`
+              : guesses
+          }
           onChange={this.handleTextfieldChange}
           margin="dense"
           variant="outlined"
@@ -82,7 +88,8 @@ const styles = createStyles({
 const ChoiceWithStyle = withStyles(styles)(Choice);
 
 const mapAppStateToProps = (appState: AppState) => ({
-  combination: appState.combination
+  combination: appState.combination,
+  endOfPlay: appState.endOfPlay
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
