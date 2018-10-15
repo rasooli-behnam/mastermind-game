@@ -10,7 +10,7 @@ interface FeedbackForIndividualSet {
 }
 
 export interface Feedback {
-  clonedGuesses: string[];
+  guesses: string[];
   overallSet: FeedbackForIndividualSet;
   firstSubSet: FeedbackForIndividualSet;
   secondSubset: FeedbackForIndividualSet;
@@ -25,6 +25,7 @@ export default function feedbackReducer(
 
     const guesses = action.payload.guesses;
     const combination = action.payload.combination;
+    feedback.guesses = guesses;
 
     const overallSetFeedback = getFeedbackFor(guesses, combination);
     const firstSubSetFeedback = getFeedbackFor(
@@ -99,7 +100,7 @@ function getFeedbackFor(
 }
 
 const defaultFeedback: Feedback = {
-  clonedGuesses: [],
+  guesses: [],
   overallSet: {
     range: [0, 8],
     rightGuesses: 0,
