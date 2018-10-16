@@ -24,7 +24,12 @@ export default function endOfPlayReducer(
       break;
 
     case constants.GET_FEEDBACK:
-      if (tries > 15)
+      if (isAllGuessesCorrect(action.payload.guesses, prevState.combination))
+        return {
+          condition: true,
+          message: `Correct! It is (${prevState.combination})`
+        };
+      else if (tries > 15)
         return {
           condition: true,
           message: `You lost! It was (${prevState.combination})`
@@ -35,4 +40,11 @@ export default function endOfPlayReducer(
 
   if (prevState && prevState.endOfPlay) return prevState.endOfPlay;
   else return initialState;
+}
+
+function isAllGuessesCorrect(guesses: string[], combination: string[]) {
+  return (
+    guesses.filter((guess, i) => guess === combination[i]).length ===
+    combination.length
+  );
 }
