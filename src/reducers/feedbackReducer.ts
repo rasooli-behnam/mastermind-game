@@ -1,6 +1,7 @@
 import * as constants from "../constants";
 import { Action } from "redux";
 import { GetFeedbackAction } from "src/actions";
+import { AppState } from ".";
 const cloneDeep = require("lodash.clonedeep");
 
 interface FeedbackForIndividualSet {
@@ -17,7 +18,7 @@ export interface Feedback {
 }
 
 export default function feedbackReducer(
-  prevState: Feedback[] = [],
+  prevState: AppState,
   action: GetFeedbackAction
 ) {
   if (action.type === constants.GET_FEEDBACK) {
@@ -56,13 +57,14 @@ export default function feedbackReducer(
       ...secondSubsetFeedback
     };
 
-    const feedbacks = cloneDeep(prevState);
+    const feedbacks = cloneDeep(prevState.feedbacks);
     feedbacks.push(feedback);
 
     return feedbacks;
   }
 
-  return prevState;
+  if (prevState && prevState.feedbacks) return prevState.feedbacks;
+  else return [];
 }
 
 function getFeedbackFor(

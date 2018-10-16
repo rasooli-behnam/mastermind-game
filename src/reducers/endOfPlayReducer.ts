@@ -1,5 +1,6 @@
 import * as constants from "../constants";
 import { GetFeedbackAction } from "../actions";
+import { AppState } from ".";
 
 export interface EndOfPlay {
   condition: boolean;
@@ -14,7 +15,7 @@ const initialState: EndOfPlay = {
 let tries: number;
 
 export default function endOfPlayReducer(
-  prevState: EndOfPlay = initialState,
+  prevState: AppState,
   action: GetFeedbackAction
 ) {
   switch (action.type) {
@@ -28,5 +29,6 @@ export default function endOfPlayReducer(
       break;
   }
 
-  return prevState;
+  if (prevState && prevState.endOfPlay) return prevState.endOfPlay;
+  else return initialState;
 }

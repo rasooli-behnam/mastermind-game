@@ -1,7 +1,6 @@
 import combinationReducer from "./combinationReducer";
 import endOfPlayReducer, { EndOfPlay } from "./endOfPlayReducer";
 import feedbackReducer, { Feedback } from "./feedbackReducer";
-import { combineReducers } from "redux";
 
 export interface AppState {
   combination: string[];
@@ -9,10 +8,10 @@ export interface AppState {
   endOfPlay: EndOfPlay;
 }
 
-const reducers = combineReducers<AppState>({
-  combination: combinationReducer,
-  feedbacks: feedbackReducer,
-  endOfPlay: endOfPlayReducer
-});
-
-export default reducers;
+export default function combineReducers(appState: AppState, action: any) {
+  return {
+    combination: combinationReducer(appState, action),
+    feedbacks: feedbackReducer(appState, action),
+    endOfPlay: endOfPlayReducer(appState, action)
+  };
+}
