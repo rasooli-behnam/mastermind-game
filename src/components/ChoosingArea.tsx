@@ -43,7 +43,11 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
   private handleTextfieldChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    this.setState({ guesses: event.target.value });
+    let value = event.target.value.trim().toUpperCase();
+
+    if (!/^[A-E]{0,9}$/.test(value)) value = value.slice(0, -1);
+
+    this.setState({ guesses: value });
   };
 
   public render() {
@@ -55,7 +59,7 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
         <TextField
           disabled={endOfPlay.condition}
           className={classes.root}
-          placeholder="enter your guesses here..."
+          placeholder="Choose a 9-letter code from A to E"
           type="text"
           value={endOfPlay.condition ? endOfPlay.message : guesses}
           onChange={this.handleTextfieldChange}
