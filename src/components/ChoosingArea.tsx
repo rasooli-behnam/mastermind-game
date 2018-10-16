@@ -12,7 +12,6 @@ import { getFeedback, GetFeedbackAction, resetCombination } from "src/actions";
 import { GlobalSettings } from "../GlobalSettings";
 
 export interface ChoiceProps extends WithStyles<typeof styles> {
-  combination: AppState["combination"];
   endOfPlay: AppState["endOfPlay"];
   resetCombination: typeof resetCombination;
   getFeedback: typeof getFeedback;
@@ -37,8 +36,7 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
     event.preventDefault();
 
     this.props.getFeedback({
-      guesses: this.state.guesses.split(""),
-      combination: this.props.combination
+      guesses: this.state.guesses.split("")
     });
   };
 
@@ -49,7 +47,7 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
   };
 
   public render() {
-    const { classes, combination, endOfPlay } = this.props;
+    const { classes, endOfPlay } = this.props;
     const { guesses } = this.state;
 
     return (
@@ -59,11 +57,7 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
           className={classes.root}
           placeholder="enter your guesses here..."
           type="text"
-          value={
-            endOfPlay.condition
-              ? `${endOfPlay.message} (${combination})`
-              : guesses
-          }
+          value={endOfPlay.condition ? endOfPlay.message : guesses}
           onChange={this.handleTextfieldChange}
           margin="dense"
           variant="outlined"
@@ -88,7 +82,6 @@ const styles = createStyles({
 const ChoiceWithStyle = withStyles(styles)(Choice);
 
 const mapAppStateToProps = (appState: AppState) => ({
-  combination: appState.combination,
   endOfPlay: appState.endOfPlay
 });
 

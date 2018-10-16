@@ -1,6 +1,6 @@
 import * as constants from "../constants";
-import { GetFeedbackAction } from "../actions";
 import { AppState } from ".";
+import { GetFeedbackAction } from "../actions";
 
 export interface EndOfPlay {
   condition: boolean;
@@ -24,7 +24,11 @@ export default function endOfPlayReducer(
       break;
 
     case constants.GET_FEEDBACK:
-      if (tries > 15) return { condition: true, message: "You have lost!" };
+      if (tries > 15)
+        return {
+          condition: true,
+          message: `You lost! It was (${prevState.combination})`
+        };
       tries++;
       break;
   }

@@ -1,7 +1,7 @@
 import * as constants from "../constants";
 import { Action } from "redux";
-import { GetFeedbackAction } from "src/actions";
 import { AppState } from ".";
+import { GetFeedbackAction } from "src/actions";
 const cloneDeep = require("lodash.clonedeep");
 
 interface FeedbackForIndividualSet {
@@ -25,7 +25,7 @@ export default function feedbackReducer(
     const feedback: Feedback = cloneDeep(defaultFeedback);
 
     const guesses = action.payload.guesses;
-    const combination = action.payload.combination;
+    const combination = prevState.combination;
     feedback.guesses = guesses;
 
     const overallSetFeedback = getFeedbackFor(guesses, combination);

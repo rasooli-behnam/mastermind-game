@@ -1,5 +1,5 @@
 import * as constants from "../constants";
-import { Action, ActionCreator } from "redux";
+import { Action } from "redux";
 
 export interface ResetCombinationAction extends Action<string> {}
 
@@ -12,7 +12,6 @@ export function resetCombination(): ResetCombinationAction {
 export interface GetFeedbackAction extends Action<string> {
   payload: {
     guesses: string[];
-    combination: string[];
   };
 }
 
@@ -22,8 +21,7 @@ export function getFeedback(
   return {
     type: constants.GET_FEEDBACK,
     payload: {
-      guesses: prams.guesses,
-      combination: prams.combination
+      guesses: prams.guesses
     }
   };
 }
