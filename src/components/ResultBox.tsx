@@ -134,7 +134,7 @@ const styles = ({ typography }: Theme) =>
       right: 7,
       fontSize: typography.fontSize * 2,
       fontFamily: "Roboto Mono",
-      fontWeight: "bold",
+      fontWeight: "normal",
       letterSpacing: -4,
       lineHeight: 0
     }
