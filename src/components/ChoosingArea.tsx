@@ -45,9 +45,9 @@ class Choice extends React.Component<ChoiceProps, ChoiceState> {
   ): void => {
     let value = event.target.value.trim().toUpperCase();
 
-    if (!/^[A-E]{0,9}$/.test(value)) value = value.slice(0, -1);
+    if (value.length > 9) value = value.slice(0, 9);
 
-    this.setState({ guesses: value });
+    if (/^[A-E]{0,9}$/.test(value)) this.setState({ guesses: value });
   };
 
   public render() {
