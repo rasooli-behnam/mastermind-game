@@ -10,5 +10,6 @@ export interface Props extends WithStyles<typeof styles> {
 }
 
 export interface State {
+  anyInputError: boolean;
   guesses: string;
 }
