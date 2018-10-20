@@ -15,6 +15,8 @@ export default function combinationReducer(
       const randomIndex = Math.floor(Math.random() * availableSybols.length);
       combination[i] = availableSybols[randomIndex];
     }
+
+    console.log(combination);
     return combination;
   }
 
