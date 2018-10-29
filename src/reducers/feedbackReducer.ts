@@ -32,21 +32,21 @@ export default function feedbackReducer(
     const firstSubSetFeedback = getFeedbackFor(
       guesses.slice(
         feedback.firstSubSet.range[0],
-        feedback.firstSubSet.range[1]
+        feedback.firstSubSet.range[1] + 1
       ),
       combination.slice(
         feedback.firstSubSet.range[0],
-        feedback.firstSubSet.range[1]
+        feedback.firstSubSet.range[1] + 1
       )
     );
     const secondSubsetFeedback = getFeedbackFor(
       guesses.slice(
         feedback.secondSubset.range[0],
-        feedback.secondSubset.range[1]
+        feedback.secondSubset.range[1] + 1
       ),
       combination.slice(
         feedback.secondSubset.range[0],
-        feedback.secondSubset.range[1]
+        feedback.secondSubset.range[1] + 1
       )
     );
 
